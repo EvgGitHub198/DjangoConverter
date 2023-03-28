@@ -1,5 +1,7 @@
 import requests
-from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -20,4 +22,37 @@ def index(request):
             'to_curr': to_curr,
             'converted_amount': converted_amount,
         }
-        return render(request, 'converter/home.html', context)
+        return render(request, 'converter/home.html', context=context)
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'auth/register.html', {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'auth/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')

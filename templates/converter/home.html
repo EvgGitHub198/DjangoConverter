@@ -2,80 +2,69 @@
 
 {% block content %}
 
-<!--    <form method="POST">-->
-<!--      {% csrf_token %}-->
-<!--      <label for="from-amount">Сумма:</label>-->
-<!--      <input step="any" id="from-amount" name="from-amount" required>-->
-<!--      <br>-->
-<!--      <label for="from-curr">From:</label>-->
-<!--      <select id="from-curr" name="from-curr" required>-->
-<!--        {% for code, name in currencies.items %}-->
-<!--          <option value="{{ code }}">{{ code }}</option>-->
-<!--&lt;!&ndash;        {{ code }} - {{ name }}&ndash;&gt;-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--      <br>-->
-<!--      <label for="to-curr">To:</label>-->
-<!--      <select id="to-curr" name="to-curr" required>-->
-<!--        {% for code, name in currencies.items %}-->
-<!--          <option value="{{ code }}">{{ code }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--      <br>-->
-<!--      <button type="submit">Конвертировать</button>-->
-<!--    </form>-->
-<!--    {% if converted_amount %}-->
-<!--      <p>{{ from_amount }} {{ from_curr }} = {{ converted_amount }} {{ to_curr }}</p>-->
-<!--    {% endif %}-->
+  <section class="hero is-fullheight" style="background-image: url('https://img.freepik.com/free-photo/the-golden-bitcoin-in-mail-hands_155003-8473.jpg?w=2000&t=st=1679851498~exp=1679852098~hmac=e165721c0e66483cc3be4b93835a409afb8316a01776e807dabb2af879e66bb9')">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half-desktop is-three-quarters-tablet">
+            <div class="box">
+              <h2 class="title is-2">Конвертер валют</h2>
+              <form method="post">
+                {% csrf_token %}
+                <div class="field">
+                  <label class="label">Сумма конвертации</label>
+                  <div class="control">
+                    <input class="input" type="text" name="from-amount" placeholder="Введите сумму">
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Из валюты</label>
+                  <div class="control">
+                    <div class="select">
+                      <select name="from-curr">
+                        {% for currency in currencies %}
+                          <option value="{{ currency }}" {% if from_curr == currency %}selected{% endif %}>{{ currency }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">В валюту</label>
+                  <div class="control">
+                    <div class="select">
+                      <select name="to-curr">
+                        {% for currency in currencies %}
+                          <option value="{{ currency }}" {% if to_curr == currency %}selected{% endif %}>{{ currency }}</option>
 
-  <section class="section">
-    <div class="container">
-      <h1 align="center" class="title">Конвертер валют</h1>
-      <form method="post">
-        {% csrf_token %}
-        <div class="field">
-          <label class="label">Сумма конвертации</label>
-          <div class="control">
-            <input class="input" type="text" name="from-amount" placeholder="Введите сумму">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Из валюты</label>
-          <div class="control">
-            <div class="select">
-              <select name="from-curr">
-                {% for currency in currencies %}
-                  <option value="{{ currency }}">{{ currency }}</option>
-                {% endfor %}
-              </select>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary has-text-black" type="submit">Конвертировать</button>
+                  </div>
+                </div>
+              </form>
+              {% if converted_amount %}
+                <div class="notification is-link is-light">
+                  {{ from_amount }} {{ from_curr }} = {{ converted_amount }} {{ to_curr }}
+                </div>
+              {% endif %}
             </div>
           </div>
-        </div>
-        <div class="field">
-          <label class="label">В валюту</label>
-          <div class="control">
-            <div class="select">
-              <select name="to-curr">
-                {% for currency in currencies %}
-                  <option value="{{ currency }}">{{ currency }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button class="button is-primary" type="submit">Конвертировать</button>
-          </div>
-        </div>
-      </form>
-      {% if converted_amount %}
-        <div class="notification is-info" style="margin-top: 20px">
-          {{ from_amount }} {{ from_curr }} = {{ converted_amount }} {{ to_curr }}
-        </div>
-      {% endif %}
+      </div>
     </div>
-  </section>
+    </div>
+    {% if user.is_authenticated %}
+  <a href="{% url 'logout' %}">Выйти</a>
+{% else %}
+  <a href="{% url 'register' %}">Зарегистрироваться</a>
+  <a href="{% url 'login' %}">Войти</a>
+{% endif %}
 
+  </section>
 
 {% endblock %}

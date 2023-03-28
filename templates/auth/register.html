@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 class="title">Регистрация</h1>
+    <div class="columns">
+      <div class="column is-8">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="field {% if form.username.errors %}has-error{% endif %}">
+            <label class="label">Имя пользователя</label>
+            <div class="control">
+              {{ form.username|add_class:"input" }}
+            </div>
+            {% if form.username.errors %}
+              <p class="help is-danger">{{ form.username.errors|join:" " }}</p>
+            {% endif %}
+          </div>
+          <div class="field {% if form.password1.errors %}has-error{% endif %}">
+            <label class="label">Пароль</label>
+            <div class="control">
+              {{ form.password1|add_class:"input"  }}
+            </div>
+            {% if form.password1.errors %}
+              <p class="help is-danger">{{ form.password1.errors|join:" " }}</p>
+            {% endif %}
+          </div>
+          <div class="field {% if form.password2.errors %}has-error{% endif %}">
+            <label class="label">Подтверждение пароля</label>
+            <div class="control">
+              {{ form.password2|add_class:"input"  }}
+            </div>
+            {% if form.password2.errors %}
+              <p class="help is-danger">{{ form.password2.errors|join:" " }}</p>
+            {% endif %}
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-link" type="submit">Зарегистрироваться</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
