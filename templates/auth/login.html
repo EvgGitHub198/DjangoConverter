@@ -1,40 +1,39 @@
-
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-<section class="section">
-  <div class="container">
-    <h1 class="title">Вход</h1>
-    <div class="columns">
-      <div class="column is-8">
-        <form method="POST">
-          {% csrf_token %}
-          <div class="field {% if form.username.errors %}has-error{% endif %}">
-            <label class="label">Имя пользователя</label>
-            <div class="control">
-              {{ form.username|add_class:"input" }}
-            </div>
-            {% if form.username.errors %}
-              <p class="help is-danger">{{ form.username.errors|join:" " }}</p>
-            {% endif %}
-          </div>
-          <div class="field {% if form.password.errors %}has-error{% endif %}">
-            <label class="label">Пароль</label>
-            <div class="control">
-              {{ form.password|add_class:"input"  }}
-            </div>
-            {% if form.password.errors %}
-              <p class="help is-danger">{{ form.password.errors|join:" " }}</p>
-            {% endif %}
-          </div>
-          <div class="field">
-            <div class="control">
-              <button class="button is-link" type="submit">Зарегистрироваться</button>
-            </div>
-          </div>
-        </form>
+
+<div class="login-page">
+  <div class="login-form">
+    <h1 class="title has-text-centered">Вход</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="field {% if form.username.errors %}has-error{% endif %}">
+        <label class="label">Имя пользователя</label>
+        <div class="control">
+          {{ form.username|add_class:"input" }}
+        </div>
+        {% if form.username.errors %}
+          <p class="help is-danger">{{ form.username.errors|join:" " }}</p>
+        {% endif %}
       </div>
-    </div>
+      <div class="field {% if form.password.errors %}has-error{% endif %}">
+        <label class="label">Пароль</label>
+        <div class="control">
+          {{ form.password|add_class:"input"  }}
+        </div>
+        {% if form.password.errors %}
+          <p class="help is-danger">{{ form.password.errors|join:" " }}</p>
+        {% endif %}
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-link" type="submit">Войти</button>
+        </div>
+      </div>
+    </form>
   </div>
-</section>
+</div>
+
+
+
 {% endblock %}

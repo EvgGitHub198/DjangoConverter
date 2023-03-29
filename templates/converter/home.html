@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-  <section class="hero is-fullheight" style="background-image: url('https://img.freepik.com/free-photo/the-golden-bitcoin-in-mail-hands_155003-8473.jpg?w=2000&t=st=1679851498~exp=1679852098~hmac=e165721c0e66483cc3be4b93835a409afb8316a01776e807dabb2af879e66bb9')">
-    <div class="hero-body">
+  <div class="hero-body">
       <div class="container has-text-centered">
         <div class="columns is-mobile is-centered">
           <div class="column is-half-desktop is-three-quarters-tablet">
@@ -17,9 +16,9 @@
                     <input class="input" type="text" name="from-amount" placeholder="Введите сумму">
                   </div>
                 </div>
-                <div class="field">
-                  <label class="label">Из валюты</label>
-                  <div class="control">
+                <div class="field is-grouped">
+                  <div class="control" style="flex: 1;">
+                    <label class="label">Из валюты</label>
                     <div class="select">
                       <select name="from-curr">
                         {% for currency in currencies %}
@@ -28,21 +27,19 @@
                       </select>
                     </div>
                   </div>
-                </div>
-                <div class="field">
-                  <label class="label">В валюту</label>
-                  <div class="control">
+                  <img src="{% static 'img/arrow2.svg' %}" alt="" class="arrow">
+                  <div class="control" style="flex: 1;">
+                    <label class="label">В валюту</label>
                     <div class="select">
                       <select name="to-curr">
                         {% for currency in currencies %}
                           <option value="{{ currency }}" {% if to_curr == currency %}selected{% endif %}>{{ currency }}</option>
-
                         {% endfor %}
                       </select>
                     </div>
                   </div>
                 </div>
-                <div class="field">
+                <div class="field" style="margin-top: 20px">
                   <div class="control">
                     <button class="button is-primary has-text-black" type="submit">Конвертировать</button>
                   </div>
@@ -58,13 +55,10 @@
       </div>
     </div>
     </div>
-    {% if user.is_authenticated %}
-  <a href="{% url 'logout' %}">Выйти</a>
-{% else %}
-  <a href="{% url 'register' %}">Зарегистрироваться</a>
-  <a href="{% url 'login' %}">Войти</a>
-{% endif %}
 
-  </section>
+
+
+
+
 
 {% endblock %}

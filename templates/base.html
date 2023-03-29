@@ -7,9 +7,23 @@
     <title>Exchanger</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+
+
 </head>
 <body>
+ <section class="hero is-fullheight" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')">
+    <div class="navbar-end">
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="navbar-item is-pulled-right"><span class="icon is-medium has-text-white" style="background-color: firebrick;"><i class="fas fa-sign-out-alt"></i></span></a>
+      {% else %}
+        <a href="{% url 'register' %}" class="navbar-item is-pulled-right"><span class="icon is-medium has-text-white" style="background-color: darkgreen;"><i class="fas fa-user-plus"></i></span></a>
+        <a href="{% url 'login' %}" class="navbar-item is-pulled-right"><span class="icon is-medium has-text-white" style="background-color: #b6b667"><i class="fas fa-sign-in-alt"></i></span></a>
+      {% endif %}
+        <a href="/" class="navbar-item is-pulled-right"><span class="icon is-medium has-text-white" style="background-color: cornflowerblue;"><i class="fas fa-home"></i></span></a>
+    </div>
     {% block content%}
     {% endblock %}
+  </section>
 </body>
 </html>
