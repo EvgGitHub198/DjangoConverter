@@ -1,9 +1,7 @@
 import requests
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-
 from converter.forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
@@ -40,23 +38,23 @@ def register(request):
     return render(request, 'auth/register.html', {'form': form})
 
 
-
 def user_login(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('username')
-            username = User.objects.get(email=email).username
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('/')
+            email = form.cleaned_data.get('username').lower()
+            try:
+                username = User.objects.get(email=email).username
+                password = form.cleaned_data.get('password')
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('/')
+            except User.DoesNotExist:
+                form.add_error('username', 'Invalid email or password')
     else:
         form = CustomAuthenticationForm()
     return render(request, 'auth/login.html', {'form': form})
-
-
 
 
 def user_logout(request):

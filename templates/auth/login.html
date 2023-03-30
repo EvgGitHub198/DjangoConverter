@@ -8,15 +8,18 @@
     <h1 class="title has-text-centered">Вход</h1>
     <form method="POST">
       {% csrf_token %}
-      <div class="field {% if form.username.errors %}has-error{% endif %}">
+      <div class="field {% if form.username.errors or form.errors %}has-error{% endif %}">
         <label class="label">Почта</label>
         <div class="control">
           {{ form.username|add_class:"input" }}
         </div>
         {% if form.username.errors %}
-          <p class="help is-danger">{{ form.username.errors|join:" " }}</p>
+          <p class="help is-danger">Неверный e-mail или пароль</p>
+        {% elif form.errors %}
+          <p class="help is-danger">Неверный e-mail или пароль</p>
         {% endif %}
       </div>
+
       <div class="field {% if form.password.errors %}has-error{% endif %}">
         <label class="label">Пароль</label>
         <div class="control">
