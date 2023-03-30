@@ -16,6 +16,15 @@
           <p class="help is-danger">{{ form.username.errors|join:" " }}</p>
         {% endif %}
       </div>
+      <div class="field {% if form.email.errors %}has-error{% endif %}">
+        <label class="label">Почта</label>
+        <div class="control">
+          {{ form.email|add_class:"input" }}
+        </div>
+        {% if form.email.errors %}
+          <p class="help is-danger">{{ form.email.errors|join:" " }}</p>
+        {% endif %}
+      </div>
       <div class="field {% if form.password1.errors %}has-error{% endif %}">
         <label class="label">Пароль</label>
         <div class="control">

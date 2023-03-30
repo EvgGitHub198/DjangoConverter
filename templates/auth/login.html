@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+
 {% block content %}
 
 <div class="login-page">
@@ -8,7 +9,7 @@
     <form method="POST">
       {% csrf_token %}
       <div class="field {% if form.username.errors %}has-error{% endif %}">
-        <label class="label">Имя пользователя</label>
+        <label class="label">Почта</label>
         <div class="control">
           {{ form.username|add_class:"input" }}
         </div>
@@ -33,7 +34,5 @@
     </form>
   </div>
 </div>
-
-
 
 {% endblock %}
